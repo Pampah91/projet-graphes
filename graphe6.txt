@@ -1,0 +1,12 @@
+Valeurs_diff_arcs
+11
+Nbre_sommets
+12
+Sommets_initiaux
+1 0
+Sommets_terminaux
+1 11
+Nbre_transitions
+18
+Transitions
+0'0'4 0'0'5 0'0'6 0'0'7 0'0'10 1'1'9 2'2'9 3'3'9 4'4'1 5'5'1 5'5'8 6'6'3 7'7'2 7'7'8 8'8'9 9'9'11 10'10'1 10'10'3
