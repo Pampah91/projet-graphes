@@ -26,12 +26,12 @@ public class Main {
 			g.readAndStore();
 			System.out.println("");
 			
-		//test sauvegarde info lecture
+			//Valeur_diffarcs
 			System.out.println("Il y a "+g.valeurs_diff_arcs+" valeur(s) différente(s) sur les arcs");
 
 			System.out.println("Il y a "+g.nbre_sommets+" sommet(s)");
 
-			//affichage Sommet initiaux
+			//Sommets initiaux
 			//System.out.println("Test memo_length[0] :"+ g.memo_length_SI_SF[0]);//test
 			
 			System.out.println("On a :"+ g.sommets_initiaux[0]+" sommets qui n'ont pas de prédécesseur");
@@ -45,7 +45,7 @@ public class Main {
 			
 			System.out.println(" ");// saut de ligne
 			
-			//affichage Sommets terminaux
+			//Sommets terminaux
 			//System.out.println("Test memo_length[1] :"+ g.memo_length_SI_SF[1]);//test
 			
 			System.out.println("On a :"+ g.sommets_terminaux[0]+" sommets qui n'ont pas de successeur");
@@ -57,21 +57,45 @@ public class Main {
 				System.out.print(g.sommets_terminaux[i]+", ");
 			}
 			
+			//Nbre transitions + transitions
 			System.out.println(" ");
 			System.out.println("Il y a "+g.nbre_transitions+" transition(s)");
 			
 			//System.out.println(g.transitions_int_memo);
-			for(i=0;i<g.transitions_int_memo.length;i++)
+			for(i=0;i<g.Global_valTableauSansSignetransitions.length;i++)
 			{
-				/*for(int j=0;j<g.transitions_int_memo[i].length;j++)
+				/*for(int j=0;j<g.Global_valTableauSansSignetransitions[i].length;j++)
 				{*/
-					System.out.println(g.transitions_int_memo[i][0]+" --> "+g.transitions_int_memo[i][2]+" = "+g.transitions_int_memo[i][1]);
-					//System.out.print(g.transitions_int_memo[i][j]);
+					System.out.println(g.Global_valTableauSansSignetransitions[i][0]+" --> "+g.Global_valTableauSansSignetransitions[i][2]+" = "+g.Global_valTableauSansSignetransitions[i][1]);
+					//System.out.print(g.Global_valTableauSansSignetransitions[i][j]+" ");
 				//} 
 				//System.out.println(" ");
 			}
 			
-			//System.out.println(g.nbrArcsEntreSommets(2,9));
+			//testSystem.out.println("le nbre d'arc entre 0 et 0 est : "+g.nbrArcsEntreSommets(0,0));
+			
+			System.out.println("\nMatrice d'adjacence du graphe :\n");
+			g.dispAdjMatrix();
+			
+			//Degré et demi degré
+			System.out.println("Test demi degré ext : ");
+			System.out.println(g.ddExt(0)); // valeur rentrée en paramètre est le sommet étudié
+			
+			System.out.println("Test demi degré int : ");
+			System.out.println(g.ddInt(0)); // valeur rentrée en paramètre est le sommet étudié
+			
+			System.out.println("Valeur du degré (somme de degInt et degExt : )");
+			System.out.println(g.deg(0));
+			
+			System.out.println("Test demi degré ext : ");
+			System.out.println(g.ddExt(3)); // valeur rentrée en paramètre est le sommet étudié
+			
+			System.out.println("Test demi degré int : ");
+			System.out.println(g.ddInt(3)); // valeur rentrée en paramètre est le sommet étudié
+			
+			System.out.println("Valeur du degré (somme de degInt et degExt : )");
+			System.out.println(g.deg(3));
+			
 			
 		//Recommencer le programme sans intéruption	
 		do {

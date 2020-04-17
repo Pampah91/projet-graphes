@@ -18,8 +18,9 @@ public int[] memo_length_SI_SF; // tableau qui stockera le nbre d'informations/v
 public int[] sommets_initiaux;
 public int[] sommets_terminaux;
 public int nbre_transitions;
-public ArrayList<String> transitions_string;
-public int[][] transitions_int_memo;
+public ArrayList<String> transitions_string = new ArrayList<String>();
+public int[][] Global_valTableauSansSignetransitions;//tableau global de valTableauSansSignetransitions int [][]
+public int[][] adjMatrix;
 
 //static int arret_readAndStore;// stop la fonction à 1, continue le programme à 0
 
@@ -60,7 +61,6 @@ public int[][] transitions_int_memo;
 	
 	do {
 		try {
-			  ArrayList<String> transitions_string = new ArrayList<String>();
 			  
               System.out.println("Quel graphe voulez vous ouvrir ? Exemple : graphe1.txt \nVotre graphe : ");
 			  Scanner input = new Scanner(System.in);
@@ -165,7 +165,7 @@ public int[][] transitions_int_memo;
 	        	else if (data.contains("Transitions")) 
 	        	{
 	        		int i=0;
-	        		int transitions_int[][] = new int[nbre_transitions][3];
+	        		int valTableauSansSignetransitions[][] = new int[nbre_transitions][3];
 		            data = myReader.nextLine();//sauter la ligne	            		            	
 		            StringTokenizer val = new StringTokenizer(data," "); //" " indique qu'on utilise le séparateur de mots (de valeurs) espace.
 		            
@@ -175,20 +175,20 @@ public int[][] transitions_int_memo;
 		            }
 		          System.out.println(transitions_string);
 
-				  for (i=0; i<transitions_int.length; i++)
+				  for (i=0; i<valTableauSansSignetransitions.length; i++)
 				  {   
 					  int j=0;
 					  StringTokenizer val2 = new StringTokenizer(transitions_string.get(i),"'");//"'" indique qu'on utilise le séparateur de mots (de valeurs) '.
 					  
 				  	  while(val2.hasMoreTokens())
 					  {
-						  transitions_int[i][j]=Integer.parseInt(val2.nextToken());
+				  		valTableauSansSignetransitions[i][j]=Integer.parseInt(val2.nextToken());
 						  //System.out.print(transitions_int[i][j]);//test
 						  j++;
 					  }
 					 // System.out.println("");//test
 				  }
-				  transitions_int_memo = transitions_int ;
+				  Global_valTableauSansSignetransitions = valTableauSansSignetransitions ;
 	        	}
 		      }
 		      myReader.close();
@@ -206,10 +206,10 @@ public int[][] transitions_int_memo;
 	   }while(restart != 0);
 	}
 	
-
-	/*public int nbrArcsEntreSommets(int sommetA, int sommetB) {
-        int compteurArcs = 0; 
-         System.out.println(transitions_string);
+	public int nbrArcsEntreSommets(int sommetA, int sommetB) {
+		
+		int compteurArcs = 0; 
+        
         for(int i=0; i < transitions_string.size(); i++) {        
             
             String elem = transitions_string.get(i);
@@ -226,11 +226,83 @@ public int[][] transitions_int_memo;
              }
         }
         return compteurArcs;
-    }*/
+    }
 	
 	public void matrice_des_valeurs(/*nbre_sommets*/) {
 		
-		nbre_sommets=1;
+		//nbre_sommets=1;
 }
+	
+	public int[][] dispAdjMatrix() {	
+		
+		int[][] matrix = new int[nbre_sommets][nbre_sommets];
+		
+		// Affichage de la matrice
+		
+		for(int i = 0; i < nbre_sommets; i++)
+		{			   
+			for(int j = 0; j < nbre_sommets; j++)
+			{
+				 matrix[i][j] = nbrArcsEntreSommets(i, j);
+		    }			  
+		}
+		
+		adjMatrix = matrix;
+		
+		
+		for(int i = 0; i < nbre_sommets; i++){
+			   
+			for(int j = 0; j < nbre_sommets; j++){
+				 //System.out.println(adjMatrix);
+			     System.out.print(adjMatrix[i][j] + " | ");
+			   }
+			  System.out.println("");
+			  System.out.println("");
+		}	
+		return adjMatrix;
+	}
+	
+
+	
+	// Calcul des degrés / demi-degrés
+	
+	public int ddExt(int sommet) { 
+		int dde = 0;
+		
+		/* A partir de la matrice d'adjacence :
+		 * somme des coefficients sur la ligne correspondant au sommet choisi 
+		 */
+		
+		for (int j = 0; j < nbre_sommets; j++) {
+			// on somme les éléments
+			dde = dde + adjMatrix[sommet][j];
+		}
+		return dde;
+	}
+	
+	public int ddInt(int sommet) { 
+		int ddi = 0;
+		
+		/* A partir de la matrice d'adjacence :
+		 * somme des coefficients sur la colonne correspondant au sommet choisi 
+		 */
+		
+		for (int i = 0; i < nbre_sommets; i++) {
+			// on somme les éléments
+			ddi = ddi + adjMatrix[i][sommet];
+		}
+		return ddi;
+	}
+	
+	public int deg(int sommet) {
+		int degValue;
+		
+		int demiDegInt = ddInt(sommet);
+		int demiDegExt = ddExt(sommet);
+		
+		degValue = demiDegInt + demiDegExt;
+		
+		return degValue;
+	}
 	
 }
