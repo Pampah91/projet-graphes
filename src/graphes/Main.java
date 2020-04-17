@@ -27,9 +27,9 @@ public class Main {
 			System.out.println("");
 			
 		//test sauvegarde info lecture
-			System.out.println("Il y a "+g.valeurs_diff_arcs[0]+" valeur(s) différente(s) sur les arcs");
+			System.out.println("Il y a "+g.valeurs_diff_arcs+" valeur(s) différente(s) sur les arcs");
 
-			System.out.println("Il y a "+g.nbre_sommets[0]+" sommet(s)");
+			System.out.println("Il y a "+g.nbre_sommets+" sommet(s)");
 
 			//affichage Sommet initiaux
 			//System.out.println("Test memo_length[0] :"+ g.memo_length_SI_SF[0]);//test
@@ -58,8 +58,22 @@ public class Main {
 			}
 			
 			System.out.println(" ");
-			System.out.println("Il y a "+g.nbre_transitions[0]+" transition(s)");
+			System.out.println("Il y a "+g.nbre_transitions+" transition(s)");
 			
+			//System.out.println(g.transitions_int_memo);
+			for(i=0;i<g.transitions_int_memo.length;i++)
+			{
+				/*for(int j=0;j<g.transitions_int_memo[i].length;j++)
+				{*/
+					System.out.println(g.transitions_int_memo[i][0]+" --> "+g.transitions_int_memo[i][2]+" = "+g.transitions_int_memo[i][1]);
+					//System.out.print(g.transitions_int_memo[i][j]);
+				//} 
+				//System.out.println(" ");
+			}
+			
+			//System.out.println(g.nbrArcsEntreSommets(2,9));
+			
+		//Recommencer le programme sans intéruption	
 		do {
 			 System.out.println(" Voullez-vous changer de graphe? Si oui, tapez \"1\". Sinon, arreter le programme en tapant \"0\" ");
 			 Scanner input_arretP = new Scanner(System.in);
@@ -76,7 +90,7 @@ public class Main {
 		}
 		}catch (NoSuchElementException e) 
 	      {
-	       System.out.println("Caca");
+	       System.out.println("Erreur, vous n'avez pas saisi 0 ou 1!");
 	       e.printStackTrace();
 	      }
 		

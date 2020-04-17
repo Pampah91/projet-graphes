@@ -3,30 +3,27 @@ package graphes;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-//import java.io.BufferedReader;
-//import java.io.FileReader;
 import java.util.StringTokenizer;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Graph {
 	
 //déclaration de variables
 
-public int[] valeurs_diff_arcs;
-public int[] nbre_sommets;
+public int valeurs_diff_arcs;
+public int nbre_sommets;
 public int[] memo_length_SI_SF; // tableau qui stockera le nbre d'informations/valeurs de EI en [0] et EF en [1]
 public int[] sommets_initiaux;
 public int[] sommets_terminaux;
-public int[] nbre_transitions;
-public String[] transitions;
+public int nbre_transitions;
+public ArrayList<String> transitions_string;
+public int[][] transitions_int_memo;
 
 //static int arret_readAndStore;// stop la fonction à 1, continue le programme à 0
 
-	/*public int compteur_taille() {
-		
-		return 1;
-	}*/
-	
+
 	public void readallFile() {
 		
 		try {
@@ -63,6 +60,8 @@ public String[] transitions;
 	
 	do {
 		try {
+			  ArrayList<String> transitions_string = new ArrayList<String>();
+			  
               System.out.println("Quel graphe voulez vous ouvrir ? Exemple : graphe1.txt \nVotre graphe : ");
 			  Scanner input = new Scanner(System.in);
               filename = input.nextLine();
@@ -80,33 +79,26 @@ public String[] transitions;
 	        	
 	        	if (data.contains("Valeurs_diff_arcs")) 
 	        	{
-	        		int i=0;
-	        		valeurs_diff_arcs = new int[1];
 		            data = myReader.nextLine();//sauter la ligne  
 		            	
 		            StringTokenizer val = new StringTokenizer(data," "); // ici point important: ," " indique qu'on utilise le séparateur de mots (de valeurs) espace.
 		            
 		            while(val.hasMoreTokens()) //tant que il y a encore des valeurs
 		            { 
-		            	valeurs_diff_arcs[i] = Integer.parseInt(val.nextToken()); //le tableau prend l'entier
-		            	System.out.println(valeurs_diff_arcs[i]); 
-		               	i++;
+		            	valeurs_diff_arcs = Integer.parseInt(val.nextToken()); //le tableau prend l'entier
+		            	System.out.println(valeurs_diff_arcs); 
 		            } 
-		            	
 	        	}
 	        	
 	        	else if (data.contains("Nbre_sommets")) 
 	        	{
-	        		int i = 0;
-	        		nbre_sommets = new int[1];
 		            data = myReader.nextLine();//sauter la ligne	            		            	
 		            StringTokenizer val = new StringTokenizer(data," "); // ici point important: ," " indique qu'on utilise le séparateur de mots (de valeurs) espace.
 		            
 		            while(val.hasMoreTokens()) //tant que il y a encore des valeurs
 		            { 
-		            	nbre_sommets[i] = Integer.parseInt(val.nextToken()); //le tableau prend l'entier
-		            	System.out.println(nbre_sommets[i]);// on affiche avec le get la valeur de Sortie
-		            	i++;
+		            	nbre_sommets = Integer.parseInt(val.nextToken()); //le tableau prend l'entier
+		            	System.out.println(nbre_sommets);// on affiche avec le get la valeur de Sortie
 		            } 
 		            //System.out.println(line);	  
 	        	}
@@ -159,20 +151,45 @@ public String[] transitions;
 	        	
 	        	else if (data.contains("Nbre_transitions")) 
 	        	{
-	        		int i = 0;
-	        		nbre_transitions = new int[1];
 		            data = myReader.nextLine();//sauter la ligne	            		            	
 		            StringTokenizer val = new StringTokenizer(data," "); // ici point important: ," " indique qu'on utilise le séparateur de mots (de valeurs) espace.
 		            
 		            while(val.hasMoreTokens()) //tant que il y a encore des valeurs
 		            { 
-		            	nbre_transitions[i] = Integer.parseInt(val.nextToken()); //le tableau prend l'entier
-		            	System.out.println(nbre_transitions[i]);// on affiche avec le get la valeur de Sortie
-		            	i++;
+		            	nbre_transitions = Integer.parseInt(val.nextToken()); //le tableau prend l'entier
+		            	System.out.println(nbre_transitions);// on affiche avec le get la valeur de Sortie
 		            } 
 		            //System.out.println(line);	  
 	        	}
 	        	
+	        	else if (data.contains("Transitions")) 
+	        	{
+	        		int i=0;
+	        		int transitions_int[][] = new int[nbre_transitions][3];
+		            data = myReader.nextLine();//sauter la ligne	            		            	
+		            StringTokenizer val = new StringTokenizer(data," "); //" " indique qu'on utilise le séparateur de mots (de valeurs) espace.
+		            
+		            while(val.hasMoreTokens()) //tant que il y a encore des valeurs
+		            {   		
+		            	transitions_string.add(val.nextToken());
+		            }
+		          System.out.println(transitions_string);
+
+				  for (i=0; i<transitions_int.length; i++)
+				  {   
+					  int j=0;
+					  StringTokenizer val2 = new StringTokenizer(transitions_string.get(i),"'");//"'" indique qu'on utilise le séparateur de mots (de valeurs) '.
+					  
+				  	  while(val2.hasMoreTokens())
+					  {
+						  transitions_int[i][j]=Integer.parseInt(val2.nextToken());
+						  //System.out.print(transitions_int[i][j]);//test
+						  j++;
+					  }
+					 // System.out.println("");//test
+				  }
+				  transitions_int_memo = transitions_int ;
+	        	}
 		      }
 		      myReader.close();
 		      
@@ -188,5 +205,32 @@ public String[] transitions;
 		
 	   }while(restart != 0);
 	}
-			
+	
+
+	/*public int nbrArcsEntreSommets(int sommetA, int sommetB) {
+        int compteurArcs = 0; 
+         System.out.println(transitions_string);
+        for(int i=0; i < transitions_string.size(); i++) {        
+            
+            String elem = transitions_string.get(i);
+            String [] temp = elem.split("'");
+
+            List<String> al = new ArrayList<String>();
+            al = Arrays.asList(temp);
+            
+            int valeur1 = Integer.valueOf(al.get(0)); // on convertit le string en int pour pouvoir comparer
+            int valeur2 = Integer.valueOf(al.get(2));
+           
+            if(valeur1 == sommetA &&  valeur2 == sommetB) {
+                compteurArcs++;
+             }
+        }
+        return compteurArcs;
+    }*/
+	
+	public void matrice_des_valeurs(/*nbre_sommets*/) {
+		
+		nbre_sommets=1;
+}
+	
 }
