@@ -21,6 +21,7 @@ public int nbre_transitions;
 public ArrayList<String> transitions_string = new ArrayList<String>();
 public int[][] Global_valTableauSansSignetransitions;//tableau global de valTableauSansSignetransitions int [][]
 public int[][] adjMatrix;
+public int[][] ValueMatrix;
 
 //static int arret_readAndStore;// stop la fonction à 1, continue le programme à 0
 
@@ -228,11 +229,6 @@ public int[][] adjMatrix;
         return compteurArcs;
     }
 	
-	public void matrice_des_valeurs(/*nbre_sommets*/) {
-		
-		//nbre_sommets=1;
-}
-	
 	public int[][] dispAdjMatrix() {	
 		
 		int[][] matrix = new int[nbre_sommets][nbre_sommets];
@@ -262,7 +258,56 @@ public int[][] adjMatrix;
 		return adjMatrix;
 	}
 	
-
+	public void matrice_des_valeurs() {
+		
+		int[][] matrix = new int[nbre_sommets][nbre_sommets];
+		int valeur_Inexistant = -999;// valeur de l'arc si l'arc n'existe pas dans le tableau matrice des valeurs
+		
+		for(int i=0;i<nbre_sommets;i++)
+		{
+			for(int j=0;j<nbre_sommets;j++)
+			{
+				matrix[i][j] = valeur_Inexistant;// on initialise toute la matrice des valeurs avec la valeur inexistant
+				//System.out.print(matrix[i][j]+"|");//test
+			}
+			//System.out.println("");//test
+		}
+		//System.out.println("");//test
+		
+		for(int i=0;i<Global_valTableauSansSignetransitions.length;i++)
+		{
+			for(int j=0;j<Global_valTableauSansSignetransitions[i].length;j++)
+			{
+				matrix[Global_valTableauSansSignetransitions[i][0]][Global_valTableauSansSignetransitions[i][2]] = Global_valTableauSansSignetransitions[i][1];// on place les valeurs des arcs à la position souhaiter dans la matrice des valeurs
+			}			
+		}
+		
+		ValueMatrix = matrix;
+		
+		//affichage test de matrice des valeurs
+		for(int i=0;i<nbre_sommets;i++)
+		{
+			for(int j=0;j<nbre_sommets;j++)
+			{
+				if(matrix[i][j] == -999)
+				{
+					System.out.print("X |");//test
+				}
+				else
+				{
+					if(matrix[i][j] < 10 && matrix[i][j] >= 0)
+					{
+						System.out.print(matrix[i][j]+" |");
+					}
+					else 
+					{
+						System.out.print(matrix[i][j]+"|");
+					}				
+				}
+			}
+			System.out.println("");//test
+		}
+	}
 	
 	// Calcul des degrés / demi-degrés
 	

@@ -72,8 +72,8 @@ public class Main {
 				//System.out.println(" ");
 			}
 			
+			//Matrice d'adjacence
 			//testSystem.out.println("le nbre d'arc entre 0 et 0 est : "+g.nbrArcsEntreSommets(0,0));
-			
 			System.out.println("\nMatrice d'adjacence du graphe :\n");
 			g.dispAdjMatrix();
 			
@@ -87,6 +87,8 @@ public class Main {
 			System.out.println("Valeur du degré (somme de degInt et degExt : )");
 			System.out.println(g.deg(0));
 			
+			System.out.println("\nMatrice des valeurs du graphe :\n");
+			g.matrice_des_valeurs();
 			System.out.println("Test demi degré ext : ");
 			System.out.println(g.ddExt(3)); // valeur rentrée en paramètre est le sommet étudié
 			
