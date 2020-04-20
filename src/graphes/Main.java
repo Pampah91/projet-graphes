@@ -87,17 +87,25 @@ public class Main {
 			System.out.println("Valeur du degré (somme de degInt et degExt : )");
 			System.out.println(g.deg(0));
 			
+			//Matrice des valeurs du graphe
 			System.out.println("\nMatrice des valeurs du graphe :\n");
 			g.matrice_des_valeurs();
-			System.out.println("Test demi degré ext : ");
-			System.out.println(g.ddExt(3)); // valeur rentrée en paramètre est le sommet étudié
-			
-			System.out.println("Test demi degré int : ");
-			System.out.println(g.ddInt(3)); // valeur rentrée en paramètre est le sommet étudié
-			
-			System.out.println("Valeur du degré (somme de degInt et degExt : )");
-			System.out.println(g.deg(3));
-			
+
+			//Matrice d'adjacence de la fermeture transitive
+			System.out.println("\nDétection circuit: technique Roy_Marshall");
+			System.out.println("Matrice d'adjacence de la fermeture transitive du graphe:\n");
+			g.Matrice_adjacence_fermetureTransitive();
+
+			//Détecttion circuit
+			System.out.println("On vérifie la présence d'un arc d'un sommet à lui même.\n");
+			if(g.detection_circuit())
+			{
+				System.out.println("Il y a au moins un circuit dans le graphe");
+			}
+			else 
+			{
+				System.out.println("Le graphe ne contient pas de circuit");
+			}
 			
 		//Recommencer le programme sans intéruption	
 		do {

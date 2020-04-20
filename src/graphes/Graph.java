@@ -22,6 +22,7 @@ public ArrayList<String> transitions_string = new ArrayList<String>();
 public int[][] Global_valTableauSansSignetransitions;//tableau global de valTableauSansSignetransitions int [][]
 public int[][] adjMatrix;
 public int[][] ValueMatrix;
+public int[][] mft;
 
 //static int arret_readAndStore;// stop la fonction à 1, continue le programme à 0
 
@@ -348,6 +349,54 @@ public int[][] ValueMatrix;
 		degValue = demiDegInt + demiDegExt;
 		
 		return degValue;
+	}
+	
+	public void Matrice_adjacence_fermetureTransitive() {
+		
+		int x=0; //sommet actuel
+		int y=0; //Prédécesseur de x
+		int z=0; //Successeur de x
+		mft = adjMatrix;// G' = G
+		
+		for(x=0;x<nbre_sommets;x++) //on parcourt l'ensemble des sommets
+		{
+			System.out.println("Etape x = "+x);
+			
+			for(y=0;y<nbre_sommets;y++) //Pour le sommet x qu'on étudie, on parcourt l'ensemble des sommets
+			{
+				for(z=0;z<nbre_sommets;z++) //Pour le sommet x et y qu'on étudie, on parcourt l'ensemble des sommets
+				{
+					if(mft[y][x]==1 && mft[z][x]==1)// si le sommet x est un intémerdiaire entre deux sommets y=prédécesseur et z=successeur
+					{//alors on créer un arc entre le prédécesseur y et le successeur z de x.
+						mft[y][z]=1;
+					}	
+					else 
+					{
+						//Sinon, on ne modifie rien.
+					}
+					System.out.print(mft[y][z]+" | ");
+				}
+				System.out.println("");
+			}
+			System.out.println("");
+		}	
+	}
+	
+	public boolean detection_circuit(){
+		
+		 // on considère que mft est le tableau 2D représentant la matrice fermeture transitive
+		 boolean thereIsACircuit = false;
+		 int i=0;
+		
+		 while(i<nbre_sommets || thereIsACircuit == false) 
+		 {
+			 if(mft[i][i] == 1)
+			 {
+				 thereIsACircuit = true;
+			 }
+		   i++;
+		 }
+	  return thereIsACircuit;
 	}
 	
 }
