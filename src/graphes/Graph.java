@@ -165,7 +165,7 @@ public int[][] mft;
 	        	}
 	        	
 	        	else if (data.contains("Transitions")) 
-	        	{
+	        	{System.out.println("l168 test nbre transitions = "+nbre_transitions);
 	        		int i=0;
 	        		int valTableauSansSignetransitions[][] = new int[nbre_transitions][3];
 		            data = myReader.nextLine();//sauter la ligne	            		            	
@@ -227,6 +227,7 @@ public int[][] mft;
                 compteurArcs++;
              }
         }
+        //System.out.println("l230, test compteursArcs="+compteurArcs);//test
         return compteurArcs;
     }
 	
@@ -386,9 +387,9 @@ public int[][] mft;
 		
 		 // on considère que mft est le tableau 2D représentant la matrice fermeture transitive
 		 boolean thereIsACircuit = false;
-		 int i=0;
+		 int i=0;		 
 		
-		 while(i<nbre_sommets || thereIsACircuit == false) 
+		 while(i<mft.length && thereIsACircuit == false) 
 		 {
 			 if(mft[i][i] == 1)
 			 {
@@ -399,4 +400,15 @@ public int[][] mft;
 	  return thereIsACircuit;
 	}
 	
+	public void remove_arraylist_transitions_string()
+	{
+		int memo_transitionsize = transitions_string.size();		
+		//System.out.println("l404 test size = "+memo_transitionsize);//test
+		
+		for(int i=0;i<memo_transitionsize;i++)
+		{
+			//System.out.println("l404 test i = "+i);//test
+			transitions_string.remove(0);
+		}
+	}
 }

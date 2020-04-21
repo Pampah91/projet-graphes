@@ -26,12 +26,12 @@ public class Main {
 			g.readAndStore();
 			System.out.println("");
 			
-			//Valeur_diffarcs
+		//Valeur_diffarcs
 			System.out.println("Il y a "+g.valeurs_diff_arcs+" valeur(s) différente(s) sur les arcs");
 
 			System.out.println("Il y a "+g.nbre_sommets+" sommet(s)");
 
-			//Sommets initiaux
+		//Sommets initiaux
 			//System.out.println("Test memo_length[0] :"+ g.memo_length_SI_SF[0]);//test
 			
 			System.out.println("On a :"+ g.sommets_initiaux[0]+" sommets qui n'ont pas de prédécesseur");
@@ -45,7 +45,7 @@ public class Main {
 			
 			System.out.println(" ");// saut de ligne
 			
-			//Sommets terminaux
+		//Sommets terminaux
 			//System.out.println("Test memo_length[1] :"+ g.memo_length_SI_SF[1]);//test
 			
 			System.out.println("On a :"+ g.sommets_terminaux[0]+" sommets qui n'ont pas de successeur");
@@ -57,7 +57,7 @@ public class Main {
 				System.out.print(g.sommets_terminaux[i]+", ");
 			}
 			
-			//Nbre transitions + transitions
+		//Nbre transitions + transitions
 			System.out.println(" ");
 			System.out.println("Il y a "+g.nbre_transitions+" transition(s)");
 			
@@ -72,12 +72,12 @@ public class Main {
 				//System.out.println(" ");
 			}
 			
-			//Matrice d'adjacence
+		//Matrice d'adjacence
 			//testSystem.out.println("le nbre d'arc entre 0 et 0 est : "+g.nbrArcsEntreSommets(0,0));
 			System.out.println("\nMatrice d'adjacence du graphe :\n");
 			g.dispAdjMatrix();
 			
-			//Degré et demi degré
+		//Degré et demi degré
 			System.out.println("Test demi degré ext : ");
 			System.out.println(g.ddExt(0)); // valeur rentrée en paramètre est le sommet étudié
 			
@@ -87,16 +87,16 @@ public class Main {
 			System.out.println("Valeur du degré (somme de degInt et degExt : )");
 			System.out.println(g.deg(0));
 			
-			//Matrice des valeurs du graphe
+		//Matrice des valeurs du graphe
 			System.out.println("\nMatrice des valeurs du graphe :\n");
 			g.matrice_des_valeurs();
 
-			//Matrice d'adjacence de la fermeture transitive
+		//Matrice d'adjacence de la fermeture transitive
 			System.out.println("\nDétection circuit: technique Roy_Marshall");
 			System.out.println("Matrice d'adjacence de la fermeture transitive du graphe:\n");
 			g.Matrice_adjacence_fermetureTransitive();
 
-			//Détecttion circuit
+		//Détecttion circuit
 			System.out.println("On vérifie la présence d'un arc d'un sommet à lui même.\n");
 			if(g.detection_circuit())
 			{
@@ -107,7 +107,11 @@ public class Main {
 				System.out.println("Le graphe ne contient pas de circuit");
 			}
 			
-		//Recommencer le programme sans intéruption	
+	//Suppression de l'array list Transitions_string pour le réinitialiser lors du rebouclage.
+			g.remove_arraylist_transitions_string();
+			System.out.println("Affichage test transitions_string supprimé"+g.transitions_string);//test
+		
+			 //Recommencer le programme sans intéruption	
 		do {
 			 System.out.println(" Voullez-vous changer de graphe? Si oui, tapez \"1\". Sinon, arreter le programme en tapant \"0\" ");
 			 Scanner input_arretP = new Scanner(System.in);
