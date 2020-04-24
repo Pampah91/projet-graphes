@@ -367,7 +367,7 @@ public int[][] mft;
 			{
 				for(z=0;z<nbre_sommets;z++) //Pour le sommet x et y qu'on étudie, on parcourt l'ensemble des sommets
 				{
-					if(mft[y][x]==1 && mft[z][x]==1)// si le sommet x est un intémerdiaire entre deux sommets y=prédécesseur et z=successeur
+					if(mft[y][x]==1 && mft[x][z]==1)// si le sommet x est un intémerdiaire entre deux sommets y=prédécesseur et z=successeur
 					{//alors on créer un arc entre le prédécesseur y et le successeur z de x.
 						mft[y][z]=1;
 					}	
