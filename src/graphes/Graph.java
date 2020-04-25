@@ -379,7 +379,7 @@ public int[][] adjMatrix_modifpour_RangSommet;// matrice d'adjacence qui représe
 	  return thereIsACircuit;
 	}
 	
-	public void initialisation_rang_sommets_parddInt(){
+	public void initialisation_tableau_sommet_ddInt(){// pour le calcul du rang.
 		
 		int[][] store_sommets_ddInt = new int[nbre_sommets][2];//tableau 2dimensions local pour enregistrer le rang des sommets du graphes
 		
@@ -408,7 +408,7 @@ public int[][] adjMatrix_modifpour_RangSommet;// matrice d'adjacence qui représe
 		}
 	}	
 
-	public boolean verif_predecesseur(int sommet){
+	/*public boolean verif_predecesseur(int sommet){
 	
 		boolean there_is_valueOne_on_column_sommet = false;// = true si le sommet a au moins un prédécesseur; =false si le sommet n'a pas de prédécesseur.
 	
@@ -434,7 +434,7 @@ public int[][] adjMatrix_modifpour_RangSommet;// matrice d'adjacence qui représe
 				}
 		}
 		return there_is_valueOne_on_line_sommet;
-	}
+	}*/
 	
 	public boolean verif_allrang_pourSommet(int[]rang_sommets){
 		
@@ -465,28 +465,44 @@ public int[][] adjMatrix_modifpour_RangSommet;// matrice d'adjacence qui représe
 			}
 		}
 		
+		//initialisation tableau rang_sommets[]
+		for(int i=0;i<nbre_sommets;i++) 
+		{
+			rang_sommets[i] = -999;
+			//System.out.println("l472,rang_sommets["+i+"] = "+rang_sommets[i]);
+		}
+		
 		//modification de la matrice		
 		
 		do {
+				System.out.println("Iteration "+k);
+				System.out.println("Point d'entrée détecté : ");	
+				
 				for(int i=0;i<nbre_sommets;i++) // i = sommet actuel.
-				{
-					for(int j=0;j<nbre_sommets;j++) //tous les sommets étudiés en fonction de "i".
+				{//System.out.println("ligne481 test global_ddInt_sommets["+i+"][1] = "+global_ddInt_sommets[i][1]);//test
+					if(global_ddInt_sommets[i][1]==0 && rang_sommets[i]==-999)// si le sommet "i" est racine(pas de prédécesseur) et si le sommet "i" n'a pas encore de rang.
 					{
-						if(verif_successeur(i)==false)
-						{
-							rang_sommets[i]=k-1;//après une itération de trop on attribue la valeur "k-1" au sommet "i"
-						}
-					    
-						else if(verif_predecesseur(i)==false) //si le sommet "i" n'a pas de prédécesseur = si "i" est racine
-						{
-							if(adjMatrix_modifpour_RangSommet[i][j] == 1)//si "i" a des successeurs "j".
-							{
-								global_ddInt_sommets[j][1] = global_ddInt_sommets[j][1]-1;//on diminue de 1 la valeur du rang du sommet successeur "j".
-								adjMatrix_modifpour_RangSommet[i][j] = 0;// on supprime le sommet "i" et tous les arcs à l'origine de "i".	
-							}
-						}			
+						System.out.print(i+" ,");					
+						rang_sommets[i]=k;//on attribue le rang "k" au sommet "i"
 					}
-				}	
+					else
+					{
+						for(int j=0;j<nbre_sommets;j++) //tous les sommets étudiés en fonction de "i".
+						{
+							if(global_ddInt_sommets[i][1]==0/*verif_predecesseur(i)==false*/) //si le sommet "i" n'a pas de prédécesseur = si "i" est racine
+							{
+								if(adjMatrix_modifpour_RangSommet[i][j] == 1)//si "i" a des successeurs "j".
+								{
+									global_ddInt_sommets[j][1] = global_ddInt_sommets[j][1]-1;//on diminue de 1 la valeur du degréintérieur du sommet successeur "j".
+									adjMatrix_modifpour_RangSommet[i][j] = 0;// on supprime le sommet "i" et tous les arcs à l'origine de "i".	
+									//System.out.print(mft[y][z]+" | ");
+								}
+							}			
+						}
+					}				
+				}
+				System.out.println("");
+				System.out.println("");
 				k++;
 		   }while(verif_allrang_pourSommet(rang_sommets)== true);// tant qu'il y a des valeurs "NULL" dans le tableau du rang des sommets, on continue l'itération de k et la modification du graphe et matrice
 	
@@ -498,9 +514,7 @@ public int[][] adjMatrix_modifpour_RangSommet;// matrice d'adjacence qui représe
 		}
 		
 	}
-	
-
-	
+		
 	public void remove_arraylist_transitions_string()
 	{
 		int memo_transitionsize = transitions_string.size();		
@@ -512,4 +526,10 @@ public int[][] adjMatrix_modifpour_RangSommet;// matrice d'adjacence qui représe
 			transitions_string.remove(0);
 		}
 	}
+
+
+
+
 }
+
+

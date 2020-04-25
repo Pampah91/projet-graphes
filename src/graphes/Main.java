@@ -110,10 +110,12 @@ public class Main {
 		     //Calcul du rang des sommets.
 				//initialisation du rang des sommets.
 				System.out.println("Initialisation pour le calcul du rang des sommets avec un tableau sommet|degré Intérieur");
-				g.initialisation_rang_sommets_parddInt();
+				g.initialisation_tableau_sommet_ddInt();
 				System.out.println("");
+				
 				System.out.println("Calcul du rang des sommets avec un tableau \n");
 				g.calcul_store_rang_sommet();
+				
 			}
 			System.out.println("");
 
