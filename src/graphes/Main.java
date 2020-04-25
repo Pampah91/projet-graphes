@@ -19,6 +19,7 @@ public class Main {
 		
 	try {
 			int i = 0;
+			int j = 0;
 			int arret_programme = 1;// stop la fonction à "0", continue le programme à "1"
 				
 		while(arret_programme != 0 && arret_programme == 1)
@@ -79,13 +80,13 @@ public class Main {
 			
 		//Degré et demi degré
 			System.out.println("Test demi degré ext : ");
-			System.out.println(g.ddExt(0)); // valeur rentrée en paramètre est le sommet étudié
+			System.out.println(g.ddExt(1)); // valeur rentrée en paramètre est le sommet étudié
 			
 			System.out.println("Test demi degré int : ");
-			System.out.println(g.ddInt(0)); // valeur rentrée en paramètre est le sommet étudié
+			System.out.println(g.ddInt(1)); // valeur rentrée en paramètre est le sommet étudié
 			
 			System.out.println("Valeur du degré (somme de degInt et degExt : )");
-			System.out.println(g.deg(0));
+			System.out.println(g.deg(1));
 			
 		//Matrice des valeurs du graphe
 			System.out.println("\nMatrice des valeurs du graphe :\n");
@@ -95,23 +96,35 @@ public class Main {
 			System.out.println("\nDétection circuit: technique Roy_Marshall");
 			System.out.println("Matrice d'adjacence de la fermeture transitive du graphe:\n");
 			g.Matrice_adjacence_fermetureTransitive();
-
-		//Détecttion circuit
-			System.out.println("On vérifie la présence d'un arc d'un sommet à lui même c'est à dire la présence de \"1\" sur la diagonale.\n");
+			
+		//Détection circuit
+			System.out.println("On vérifie la présence d'un arc d'un sommet à lui même c'est à dire la présence de \"1\" sur la diagonale de la Matrice d'adjacence de la fermeture transitive.\n");
 			if(g.detection_circuit())
 			{
-				System.out.println("Il y a au moins un circuit dans le graphe.");
+				System.out.println("Il y a au moins un circuit dans le graphe car il y a au moins un \"1\" sur la diagonale de la matrice d'adjacence de la fermeture transitive.\nDonc nous ne pouvons pas faire le calcul du rang pour chaque sommet de ce graphe. ");
 			}
 			else 
 			{
-				System.out.println("Le graphe ne contient pas de circuit.\nDonc nous pouvons faire le calcul du rang pour chaque sommet de ce graphe.");
-		
+				System.out.println("Le graphe ne contient pas de circuit car il y a aucun \"1\" sur la diagonale de la matrice d'adjacence de la fermeture transitive.\nDonc nous pouvons faire le calcul du rang pour chaque sommet de ce graphe.");
+				System.out.println("");
 		     //Calcul du rang des sommets.
-				System.out.println("Initialisation du rang des sommets");
-				
+				//initialisation du rang des sommets.
+				System.out.println("Initialisation pour le calcul du rang des sommets avec un tableau sommet|degré Intérieur");
+				g.initialisation_rang_sommets_parddInt();
+				System.out.println("");
+				System.out.println("Calcul du rang des sommets avec un tableau \n");
+				g.calcul_store_rang_sommet();
 			}
 			System.out.println("");
-	
+
+			//verif prédécesseur test
+			/*g.calcul_store_rang_sommet();
+			
+			for(i=0;i<g.nbre_sommets;i++) 
+			{
+				System.out.println("sommet "+i+" a "+g.verif_predecesseur(i)+" prédécesseurs");
+			}*/
+			
 			
 		//Suppression de l'array list Transitions_string pour le réinitialiser lors du rebouclage.
 			g.remove_arraylist_transitions_string();
@@ -119,7 +132,7 @@ public class Main {
 		
 			 //Recommencer le programme sans intéruption	
 		do {
-			 System.out.println(" Voullez-vous changer de graphe? Si oui, tapez \"1\". Sinon, arreter le programme en tapant \"0\" ");
+			 System.out.println(" Voullez-vous changer de graphe? Si oui, tapez \"1\". Sinon, arreter le programme en tapant \"0\". ");
 			 Scanner input_arretP = new Scanner(System.in);
 			 arret_programme = input_arretP.nextInt();
 			 
