@@ -24,37 +24,6 @@ public int[][] adjMatrix;
 public int[][] ValueMatrix;
 public int[][] mft;
 
-//static int arret_readAndStore;// stop la fonction à 1, continue le programme à 0
-
-
-	public void readallFile() {
-		
-		try {
-			  String filename = null;
-			  System.out.println("Quel graphe voulez vous ouvrir ? Exemple : graphe1.txt \nVotre graphe : ");
-			  
-			  Scanner input = new Scanner(System.in);
-			  filename = input.nextLine();
-			  input.close();
-			  
-			  
-		      File file = new File(filename);
-		      Scanner myReader = new Scanner(file);
-		      
-		      
-		      while (myReader.hasNextLine()) {
-		        String data = myReader.nextLine();
-		        System.out.println(data);
-		      }
-		      myReader.close();
-		    } catch (FileNotFoundException e) 
-		    {
-		      System.out.println("Une erreur est survenue ! Impossible de lire le fichier.");
-		      e.printStackTrace();
-		    }
-		  
-	}
-	
 	public void readAndStore() {
 		
 	memo_length_SI_SF = new int[2];// tableau qui stockera le nbre d'information de EI en [0] et EF en [1]
@@ -165,7 +134,7 @@ public int[][] mft;
 	        	}
 	        	
 	        	else if (data.contains("Transitions")) 
-	        	{System.out.println("l168 test nbre transitions = "+nbre_transitions);
+	        	{
 	        		int i=0;
 	        		int valTableauSansSignetransitions[][] = new int[nbre_transitions][3];
 		            data = myReader.nextLine();//sauter la ligne	            		            	
@@ -398,6 +367,12 @@ public int[][] mft;
 		   i++;
 		 }
 	  return thereIsACircuit;
+	}
+	
+	public void initialisation_rang_sommets(){
+		
+		
+		
 	}
 	
 	public void remove_arraylist_transitions_string()

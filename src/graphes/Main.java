@@ -97,19 +97,25 @@ public class Main {
 			g.Matrice_adjacence_fermetureTransitive();
 
 		//Détecttion circuit
-			System.out.println("On vérifie la présence d'un arc d'un sommet à lui même.\n");
+			System.out.println("On vérifie la présence d'un arc d'un sommet à lui même c'est à dire la présence de \"1\" sur la diagonale.\n");
 			if(g.detection_circuit())
 			{
-				System.out.println("Il y a au moins un circuit dans le graphe");
+				System.out.println("Il y a au moins un circuit dans le graphe.");
 			}
 			else 
 			{
-				System.out.println("Le graphe ne contient pas de circuit");
+				System.out.println("Le graphe ne contient pas de circuit.\nDonc nous pouvons faire le calcul du rang pour chaque sommet de ce graphe.");
+		
+		     //Calcul du rang des sommets.
+				System.out.println("Initialisation du rang des sommets");
+				
 			}
+			System.out.println("");
+	
 			
-	//Suppression de l'array list Transitions_string pour le réinitialiser lors du rebouclage.
+		//Suppression de l'array list Transitions_string pour le réinitialiser lors du rebouclage.
 			g.remove_arraylist_transitions_string();
-			System.out.println("Affichage test transitions_string supprimé"+g.transitions_string);//test
+			
 		
 			 //Recommencer le programme sans intéruption	
 		do {
