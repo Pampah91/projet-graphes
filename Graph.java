@@ -24,37 +24,6 @@ public int[][] adjMatrix;
 public int[][] ValueMatrix;
 public int[][] mft;
 
-//static int arret_readAndStore;// stop la fonction à 1, continue le programme à 0
-
-
-	public void readallFile() {
-		
-		try {
-			  String filename = null;
-			  System.out.println("Quel graphe voulez vous ouvrir ? Exemple : graphe1.txt \nVotre graphe : ");
-			  
-			  Scanner input = new Scanner(System.in);
-			  filename = input.nextLine();
-			  input.close();
-			  
-			  
-		      File file = new File(filename);
-		      Scanner myReader = new Scanner(file);
-		      
-		      
-		      while (myReader.hasNextLine()) {
-		        String data = myReader.nextLine();
-		        System.out.println(data);
-		      }
-		      myReader.close();
-		    } catch (FileNotFoundException e) 
-		    {
-		      System.out.println("Une erreur est survenue ! Impossible de lire le fichier.");
-		      e.printStackTrace();
-		    }
-		  
-	}
-	
 	public void readAndStore() {
 		
 	memo_length_SI_SF = new int[2];// tableau qui stockera le nbre d'information de EI en [0] et EF en [1]
@@ -227,6 +196,7 @@ public int[][] mft;
                 compteurArcs++;
              }
         }
+        //System.out.println("l230, test compteursArcs="+compteurArcs);//test
         return compteurArcs;
     }
 	
@@ -351,64 +321,6 @@ public int[][] mft;
 		return degValue;
 	}
 	
-	
-	public List<Integer> predecesseurs_sommet(int sommet) {
-		
-		List<Integer> predecesseurs = new ArrayList<Integer>();
-		
-        for(int i=0; i < transitions_string.size(); i++) {        
-            
-            String elem = transitions_string.get(i);
-            String [] temp = elem.split("'");
-
-            List<String> a2 = new ArrayList<String>();
-            a2 = Arrays.asList(temp);
-            
-            int valeur1 = Integer.valueOf(a2.get(0)); // on convertit le string en int pour pouvoir comparer
-            int valeur2 = Integer.valueOf(a2.get(2));
-            
-            // si on voit que valeur2 = sommet
-            // on ajoute valeur1 au tableau des prédecesseurs
-           
-            if(sommet == valeur2) {
-            	predecesseurs.add(valeur1);
-            }
-        }
-
-		return predecesseurs;
-	}
-	
-	
-public List<Integer> sucesseurs_sommet(int sommet) {
-		
-		List<Integer> successeurs = new ArrayList<Integer>();
-		
-        for(int i=0; i < transitions_string.size(); i++) {        
-            
-            String elem = transitions_string.get(i);
-            String [] temp = elem.split("'");
-
-            List<String> a2 = new ArrayList<String>();
-            a2 = Arrays.asList(temp);
-            
-            int valeur1 = Integer.valueOf(a2.get(0)); // on convertit le string en int pour pouvoir comparer
-            int valeur2 = Integer.valueOf(a2.get(2));
-            
-            // si on voit que valeur2 = sommet
-            // on ajoute valeur1 au tableau des prédecesseurs
-           
-            if(sommet == valeur1) {
-            	successeurs.add(valeur2);
-            }
-        }
-
-		return successeurs;
-	}
-	
-	
-	
-	
-	
 	public void Matrice_adjacence_fermetureTransitive() {
 		
 		int x=0; //sommet actuel
@@ -424,7 +336,7 @@ public List<Integer> sucesseurs_sommet(int sommet) {
 			{
 				for(z=0;z<nbre_sommets;z++) //Pour le sommet x et y qu'on étudie, on parcourt l'ensemble des sommets
 				{
-					if(mft[y][x]==1 && mft[z][x]==1)// si le sommet x est un intémerdiaire entre deux sommets y=prédécesseur et z=successeur
+					if(mft[y][x]==1 && mft[x][z]==1)// si le sommet x est un intémerdiaire entre deux sommets y=prédécesseur et z=successeur
 					{//alors on créer un arc entre le prédécesseur y et le successeur z de x.
 						mft[y][z]=1;
 					}	
@@ -444,9 +356,9 @@ public List<Integer> sucesseurs_sommet(int sommet) {
 		
 		 // on considère que mft est le tableau 2D représentant la matrice fermeture transitive
 		 boolean thereIsACircuit = false;
-		 int i=0;
+		 int i=0;		 
 		
-		 while(i<nbre_sommets || thereIsACircuit == false) 
+		 while(i<mft.length && thereIsACircuit == false) 
 		 {
 			 if(mft[i][i] == 1)
 			 {
@@ -457,4 +369,87 @@ public List<Integer> sucesseurs_sommet(int sommet) {
 	  return thereIsACircuit;
 	}
 	
+	public void initialisation_rang_sommets(){
+		
+		
+		
+	}
+	
+	public void remove_arraylist_transitions_string()
+	{
+		int memo_transitionsize = transitions_string.size();		
+		//System.out.println("l404 test size = "+memo_transitionsize);//test
+		
+		for(int i=0;i<memo_transitionsize;i++)
+		{
+			//System.out.println("l404 test i = "+i);//test
+			transitions_string.remove(0);
+		}
+	}
+	
+	
+	/*
+	 * ORDONNANCEMENT
+	 */
+	/* Vérification des points d'entrées et de sorties */
+   
+   // Le graphe a-t-il un unique point d'entrée et un unique point de sortie ?
+      // est un point d'entrée tout sommet x qui vérifie d°-(x) = 0
+	
+	 public boolean isEntryPoint(int sommet) {
+	        
+	        boolean answer = false;
+	        
+	        if(ddInt(sommet) == 0) {
+	        	answer = true;
+	        }
+	        return answer;    
+	    }
+	 
+	 public boolean hasUniqueEntryPoint() {
+		 boolean unique = false;
+		 int compteurSommets = 0;
+		 
+		 for (int i = 0; i < nbre_sommets; i++) {
+			 if(ddInt(i) == 0) {
+				 compteurSommets++;    	
+		     }	 
+		 }
+		 
+		 if(compteurSommets == 1) {
+			 unique = true;
+		 }
+		 
+		 return unique;
+	 }
+	 
+	 public boolean isExitPoint(int sommet) {
+	        
+	        boolean answer = false;
+	        
+	        if(ddExt(sommet) == 0) {
+	        	answer = true;
+	        }
+	        return answer;    
+	    }
+	 
+	 public boolean hasUniqueExitPoint() {
+		 boolean unique = false;
+		 int compteurSommets = 0;
+		 
+		 for (int i = 0; i < nbre_sommets; i++) {
+			 if(ddExt(i) == 0) {
+				 compteurSommets++;    	
+		     }	 
+		 }
+		 
+		 if(compteurSommets == 1) {
+			 unique = true;
+		 }
+		 
+		 return unique;
+	 }
+	
+	 
+	 //Fonction de détection de circuit un peu plus haut
 }
